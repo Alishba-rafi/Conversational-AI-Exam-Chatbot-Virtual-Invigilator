@@ -1,25 +1,17 @@
 from backend.app.rag.embedding import embedding_chunks
 from backend.app.rag.vector_store import store_chunks
+from backend.app.rag.injection import upload_document
+from backend.app.rag.generator import generate_answer
 
 
 def main():
-
     print("Starting RAG pipeline...")
 
-    document_name = "sample.pdf"
+    question = "What is the internship requirement?"
 
-    chunks, embeddings = embedding_chunks()
+    answer = generate_answer(question)
 
-    print(f"Chunks Generated: {len(chunks)}")
-    print(f"Embeddings Generated: {len(embeddings)}")
-
-    store_chunks(
-        chunks=chunks,
-        embeddings=embeddings,
-        document_name=document_name
-    )
-
-    print("Data stored successfully.")
+    print(answer)
 
 
 if __name__ == "__main__":

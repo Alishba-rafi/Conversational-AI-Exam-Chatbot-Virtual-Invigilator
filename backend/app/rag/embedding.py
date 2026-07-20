@@ -13,8 +13,8 @@ client = genai.Client(
     api_key=os.getenv("GEMINI_API_KEY")
 )
 
-def embedding_chunks():
-    chunks = chunking()
+def embedding_chunks(Document_Path):
+    chunks = chunking(Document_Path)
     embeddings = []
 
     for chunk in chunks:
@@ -28,7 +28,13 @@ def embedding_chunks():
     return chunks, embeddings
 
         
+def get_embedding(text):
+    response = client.models.embed_content(
+        model="gemini-embedding-2",
+        contents=text
+    )
 
+    return response.embeddings[0].values
 
 
     

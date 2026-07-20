@@ -2,6 +2,10 @@
 __pycache__/
 *.py[codz]
 *$py.class
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/Simple_AI_chatbot
 # C extensions
 *.so
 
@@ -217,6 +221,4 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
-
-node_modules/
 frontend/node_modules/

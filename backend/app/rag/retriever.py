@@ -1,26 +1,26 @@
-from database.connection import SessionLocal
-from database.model import KnowledgeChunk
+from backend.app.database.connection import SessionLocal
+from backend.app.models.Knowledge_chunk import KnowledgeChunk
+from backend.app.rag.embedding import  get_embedding
 
 
-def store_chunks(chunks, embeddings, document_name):
+def retrieve_chunks(query, top_k=5):
 
-    db = SessionLocal()
+    session = SessionLocal()
 
     try:
 
-        for index, (chunk, embedding) in enumerate(zip(chunks, embeddings)):
+        query_embedding =  get_embedding(query)
 
-            row = KnowledgeChunk(
-                document_name=document_name,
-                page_number=chunk.metadata.get("page", 0),
-                chunk_index=index,
-                chunk_text=chunk.page_content,
-                embedding=embedding
+        results = (
+            session.query(KnowledgeChunk)
+            .order_by(
+                KnowledgeChunk.embedding.cosine_distance(query_embedding)
             )
-
-            db.add(row)
-
-        db.commit()
+            .limit(top_k)
+            .all()
+        )
+       
+        return results
 
     finally:
-        db.close()
+        session.close()

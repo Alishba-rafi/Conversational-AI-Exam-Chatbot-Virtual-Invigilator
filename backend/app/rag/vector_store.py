@@ -1,5 +1,5 @@
 from backend.app.database.connection import SessionLocal
-from backend.app.database.model import KnowledgeChunk
+from backend.app.models.Knowledge_chunk import KnowledgeChunk
 
 
 def store_chunks(chunks, embeddings, document_name):
