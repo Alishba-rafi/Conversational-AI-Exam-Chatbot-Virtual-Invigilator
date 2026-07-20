@@ -1,12 +1,16 @@
 from google import genai
 from dotenv import load_dotenv
-from chunker import chunking
+from backend.app.rag.chunker import chunking
 import os
 
 load_dotenv()
 
+# print("Current Directory:", os.getcwd())
+# print("API Key:", os.getenv("GEMINI_API_KEY"))
+
+
 client = genai.Client(
-    api_key=os.getenv("GOOGLE_API_KEY")
+    api_key=os.getenv("GEMINI_API_KEY")
 )
 
 def embedding_chunks():
@@ -20,10 +24,10 @@ def embedding_chunks():
         )
 
         embeddings.append(response.embeddings[0].values)
-
+    
     return chunks, embeddings
 
-
+        
 
 
 

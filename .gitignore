@@ -2,7 +2,6 @@
 __pycache__/
 *.py[codz]
 *$py.class
-Add-Content .gitignore "frontend/node_modules/"
 # C extensions
 *.so
 
@@ -218,5 +217,3 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
-
-node_modules/
