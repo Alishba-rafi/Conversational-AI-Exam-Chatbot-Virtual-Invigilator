@@ -39,5 +39,5 @@ Answer:
     model="gemini-3.5-flash",
     contents=prompt
 )
-
+    
     return response.text
