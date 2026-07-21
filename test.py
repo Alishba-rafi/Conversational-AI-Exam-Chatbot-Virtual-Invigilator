@@ -18,3 +18,13 @@ try:
 
 except Exception as e:
     print("Error:", e)
+
+
+# from backend.app.database.connection import SessionLocal
+# from backend.app.models.student_model import Student
+
+# db = SessionLocal()
+
+# student = db.query(Student).first()
+
+# print(student.full_name)

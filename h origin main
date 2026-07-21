@@ -1,0 +1,23 @@
+*   [33m29ae42c[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m Merge remote-tracking branch 'origin/create-Student-Chatbot_frontend-and-backend-connection-'
+[31m|[m[32m\[m  
+[31m|[m * [33mdba655d[m[33m ([m[1;31morigin/create-Student-Chatbot_frontend-and-backend-connection-[m[33m, [m[1;32mcreate-Student-Chatbot_frontend-and-backend-connection-[m[33m)[m Done with student Chatbot frontend and backend  connection
+* [32m|[m   [33m64825d3[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m Merge remote-tracking branch 'origin/Simple_AI_chatbot'
+[33m|[m[34m\[m [32m\[m  
+[33m|[m * [32m|[m [33m59604ec[m[33m ([m[1;31morigin/Simple_AI_chatbot[m[33m, [m[1;32mSimple_AI_chatbot[m[33m)[m Simple_AI_chatbot
+[33m|[m [32m|[m[32m/[m  
+* [32m|[m [33m05f0e8a[m Remove node_modules from tracking
+* [32m|[m   [33m940ad1d[m Merge branch 'database_storage'
+[35m|[m[36m\[m [32m\[m  
+[35m|[m * [32m|[m [33m25b2335[m[33m ([m[1;31morigin/database_storage[m[33m, [m[1;32mdatabase_storage[m[33m)[m database_storage
+[35m|[m [32m|[m[32m/[m  
+* [32m|[m [33mfcb1cf8[m Ignore node_modules folder
+* [32m|[m   [33m38e206b[m Ignore node_modules folder
+[1;31m|[m[1;32m\[m [32m\[m  
+[1;31m|[m * [32m|[m [33m8ca450c[m[33m ([m[1;31morigin/chunking-and-embedding-[m[33m, [m[1;32mchunking-and-embedding-[m[33m)[m chunking and embedding
+[1;31m|[m [32m|[m[32m/[m  
+* [32m|[m [33mc5a8ad6[m Add existing RAG and database files
+* [32m|[m [33mefbba1a[m[33m ([m[1;31morigin/feature/project-setup[m[33m, [m[1;32mfeature/project-setup[m[33m)[m Setup FastAPI project and first API
+* [32m|[m [33mccf4167[m Update .gitignore
+* [32m|[m [33m71747ef[m Create initial project structure
+[32m|[m[32m/[m  
+* [33m65fe94c[m Initial commit

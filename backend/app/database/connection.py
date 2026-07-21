@@ -25,7 +25,7 @@ SessionLocal = sessionmaker(
     bind=engine
 )
 
-# ✅ Add this
+
 Base = declarative_base()
 
 

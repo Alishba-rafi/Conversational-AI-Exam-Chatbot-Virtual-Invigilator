@@ -4,6 +4,7 @@ import ChatInput from "./ChatInput";
 import "../../style/ChatWindow.css";
 
 function ChatWindow() {
+  const studentId = Number(localStorage.getItem("student_id"));
   const [messages, setMessages] = useState([
     {
       id: 1,
@@ -13,9 +14,10 @@ function ChatWindow() {
   ]);
 
   const [loading, setLoading] = useState(false);
-
+// To automatically scroll when a new message arriv
   const bottomRef = useRef(null);
 
+  //Every new message automatically scrolls into view. when message and loadind state change 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({
       behavior: "smooth",
@@ -26,6 +28,7 @@ function ChatWindow() {
   const handleSend = async (text) => {
     if (!text.trim()) return;
 
+    // tostore every time different id in array of message we use date.now()
     const userMessage = {
       id: Date.now(),
       text,
@@ -35,16 +38,18 @@ function ChatWindow() {
     setMessages((prev) => [...prev, userMessage]);
 
     setLoading(true);
-
+    console.log("Student ID:", studentId);
+    console.log("Question:", text);
     try {
       const response = await fetch("http://127.0.0.1:8000/chat", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          question: text,
-        }),
+       body: JSON.stringify({
+        student_id: studentId,
+        question: text,
+       }),
       });
 
       const data = await response.json();
@@ -58,10 +63,12 @@ function ChatWindow() {
         text: data.answer,
         sender: "bot",
       };
-
+//Take all the existing messages, append the new message,
+//  save the new array as the state, and let React update 
+// the chat UI automatically.
       setMessages((prev) => [...prev, botMessage]);
     } catch (error) {
-  console.error(error);
+  console.log(error);
 
   setMessages((prev) => [
     ...prev,

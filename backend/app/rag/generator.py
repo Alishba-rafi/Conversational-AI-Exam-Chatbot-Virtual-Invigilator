@@ -1,6 +1,7 @@
 from google import genai
 from dotenv import load_dotenv
 from backend.app.rag.retriever import retrieve_chunks
+from backend.app.services.student_services import build_student_context
 import os
 
 load_dotenv()
@@ -9,8 +10,16 @@ client = genai.Client(
     api_key=os.getenv("GEMINI_API_KEY")
 )
 
-def generate_answer(question):
 
+def generate_answer(db, student_id, question):
+
+    # Get student information from SQL database
+    student_context = build_student_context(
+        db,
+        student_id
+    )
+
+    # Retrieve relevant RAG chunks
     result = retrieve_chunks(question)
 
     context = "\n\n".join(
@@ -18,16 +27,20 @@ def generate_answer(question):
         for chunk in result
     )
 
+    # Build prompt
     prompt = f"""
-You are a helpful university assistant.
+You are a university assistant.
 
-Answer the user's question ONLY using the provided context.
+Answer ONLY using the information provided below.
 
-If the answer is not present in the context, say:
-"I couldn't find that information in the provided documents."
+Student Information:
+{student_context}
 
-Context:
+Knowledge Base:
 {context}
+
+If the information is unavailable, say:
+"I couldn't find that information."
 
 Question:
 {question}
@@ -35,9 +48,10 @@ Question:
 Answer:
 """
 
+    # Generate response from Gemini
     response = client.models.generate_content(
-    model="gemini-3.5-flash",
-    contents=prompt
-)
-    
+       model="gemini-3.5-flash",
+        contents=prompt
+    )
+
     return response.text

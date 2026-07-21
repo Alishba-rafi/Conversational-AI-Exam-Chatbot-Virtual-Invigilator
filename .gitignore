@@ -2,14 +2,6 @@
 __pycache__/
 *.py[codz]
 *$py.class
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-
->>>>>>> origin/Simple_AI_chatbot
-=======
-
->>>>>>> origin/create-Student-Chatbot_frontend-and-backend-connection-
 # C extensions
 *.so
 
@@ -225,7 +217,3 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
-<<<<<<< HEAD
-frontend/node_modules/
-=======
->>>>>>> origin/create-Student-Chatbot_frontend-and-backend-connection-
