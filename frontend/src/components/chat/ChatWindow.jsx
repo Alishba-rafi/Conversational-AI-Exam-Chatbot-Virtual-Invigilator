@@ -40,33 +40,57 @@ function ChatWindow() {
     setLoading(true);
     console.log("Student ID:", studentId);
     console.log("Question:", text);
+
     try {
-      const response = await fetch("http://127.0.0.1:8000/chat", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-       body: JSON.stringify({
-        student_id: studentId,
-        question: text,
-       }),
-      });
+const response = await fetch("http://127.0.0.1:8000/chat", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+  },
+  body: JSON.stringify({
+    student_id: studentId,
+    question: text,
+  }),
+});
 
-      const data = await response.json();
+if (!response.ok) {
+  throw new Error("Something went wrong.");
+}
 
-      if (!response.ok) {
-        throw new Error(data.detail || "Something went wrong.");
-      }
+const reader = response.body.getReader();
+const decoder = new TextDecoder();
 
-      const botMessage = {
-        id: Date.now() + 1,
-        text: data.answer,
-        sender: "bot",
-      };
-//Take all the existing messages, append the new message,
+let botText = "";
+
+// Create an empty bot message
+const botId = Date.now() + 1;
+    //Take all the existing messages, append the new message,
 //  save the new array as the state, and let React update 
 // the chat UI automatically.
-      setMessages((prev) => [...prev, botMessage]);
+setMessages((prev) => [
+  ...prev,
+  {
+    id: botId,
+    text: "",
+    sender: "bot",
+  },
+]);
+
+while (true) {
+  const { done, value } = await reader.read();
+
+  if (done) break;
+
+  botText += decoder.decode(value);
+
+  setMessages((prev) =>
+    prev.map((msg) =>
+      msg.id === botId
+        ? { ...msg, text: botText }
+        : msg
+    )
+  );
+}
     } catch (error) {
   console.log(error);
 

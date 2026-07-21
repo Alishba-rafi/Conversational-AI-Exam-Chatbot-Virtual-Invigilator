@@ -3,6 +3,7 @@ from dotenv import load_dotenv
 from backend.app.rag.retriever import retrieve_chunks
 from backend.app.services.student_services import build_student_context
 import os
+import time
 
 load_dotenv()
 
@@ -13,16 +14,12 @@ client = genai.Client(
 
 def generate_answer(db, student_id, question):
 
-    # Get student information from SQL database
-    student_context = build_student_context(
-        db,
-        student_id
-    )
+    # Get student information
+    student_context = build_student_context(db, student_id)
 
-    # Retrieve relevant RAG chunks
+    # Retrieve RAG chunks
     result = retrieve_chunks(question)
 
-# combines them into one string
     context = "\n\n".join(
         chunk.chunk_text
         for chunk in result
@@ -49,10 +46,28 @@ Question:
 Answer:
 """
 
-    # Generate response from Gemini
-    response = client.models.generate_content(
-       model="gemini-3.5-flash",
+    # Stream response from Gemini
+    stream = client.models.generate_content_stream(
+        model="gemini-3.5-flash",
         contents=prompt
     )
 
-    return response.text
+    try:
+        for chunk in stream:
+            if (
+                chunk.candidates
+                and chunk.candidates[0].content
+                and chunk.candidates[0].content.parts
+            ):
+                for part in chunk.candidates[0].content.parts:
+                    if hasattr(part, "text") and part.text:
+                        
+                        words = part.text.split()
+
+                        for word in words:
+                            yield word + " "
+                            time.sleep(0.1)
+
+    except Exception as e:
+        print("STREAM ERROR:", repr(e))
+        raise

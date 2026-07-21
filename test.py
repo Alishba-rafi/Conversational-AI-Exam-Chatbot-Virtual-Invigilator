@@ -1,23 +1,23 @@
-from google import genai
-from dotenv import load_dotenv
-import os
+# from google import genai
+# from dotenv import load_dotenv
+# import os
 
-load_dotenv()
+# load_dotenv()
 
-client = genai.Client(
-    api_key=os.getenv("GEMINI_API_KEY")
-)
+# client = genai.Client(
+#     api_key=os.getenv("GEMINI_API_KEY")
+# )
 
-try:
-    response = client.models.generate_content(
-        model="gemini-3.5-flash",
-        contents="Hello, who are you?"
-    )
+# try:
+#     response = client.models.generate_content(
+#         model="gemini-3.5-flash",
+#         contents="Hello, who are you?"
+#     )
 
-    print(response.text)
+#     print(response.text)
 
-except Exception as e:
-    print("Error:", e)
+# except Exception as e:
+#     print("Error:", e)
 
 
 # from backend.app.database.connection import SessionLocal
@@ -28,3 +28,36 @@ except Exception as e:
 # student = db.query(Student).first()
 
 # print(student.full_name)
+
+
+# from google import genai
+# from dotenv import load_dotenv
+# import os
+
+# load_dotenv()
+
+# client = genai.Client(
+#     api_key=os.getenv("GEMINI_API_KEY")
+# )
+
+# for model in client.models.list():
+#     print(model.name)
+
+
+from google import genai
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+
+client = genai.Client(
+    api_key=os.getenv("GEMINI_API_KEY")
+)
+
+stream = client.models.generate_content_stream(
+   model="gemini-3.5-flash",
+    contents="Say hello in one sentence."
+)
+
+for chunk in stream:
+    print(chunk.text, end="")
