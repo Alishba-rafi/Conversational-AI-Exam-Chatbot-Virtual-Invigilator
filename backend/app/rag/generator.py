@@ -22,6 +22,7 @@ def generate_answer(db, student_id, question):
     # Retrieve relevant RAG chunks
     result = retrieve_chunks(question)
 
+# combines them into one string
     context = "\n\n".join(
         chunk.chunk_text
         for chunk in result
