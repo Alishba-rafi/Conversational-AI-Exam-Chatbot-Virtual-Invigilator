@@ -56,15 +56,21 @@ Answer:
         for chunk in stream:
             if (
                 chunk.candidates
+                # Why "candidates"?
+                # Because Gemini may generate multiple possible answers.
+                # Usually it gives only one.
                 and chunk.candidates[0].content
                 and chunk.candidates[0].content.parts
             ):
                 for part in chunk.candidates[0].content.parts:
+                    # hasattr(object, "attribute")
+                    # Does this object have this property?"
                     if hasattr(part, "text") and part.text:
-                        
+                        # array of each word
                         words = part.text.split()
 
                         for word in words:
+                            # send word by word
                             yield word + " "
                             time.sleep(0.1)
 

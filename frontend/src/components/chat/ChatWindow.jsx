@@ -56,8 +56,9 @@ const response = await fetch("http://127.0.0.1:8000/chat", {
 if (!response.ok) {
   throw new Error("Something went wrong.");
 }
-
+//to get pice
 const reader = response.body.getReader();
+// browser recive bytes not text 
 const decoder = new TextDecoder();
 
 let botText = "";
@@ -67,6 +68,8 @@ const botId = Date.now() + 1;
     //Take all the existing messages, append the new message,
 //  save the new array as the state, and let React update 
 // the chat UI automatically.
+
+// create a empty  message to display intially 
 setMessages((prev) => [
   ...prev,
   {
@@ -86,7 +89,7 @@ while (true) {
   setMessages((prev) =>
     prev.map((msg) =>
       msg.id === botId
-        ? { ...msg, text: botText }
+        ? { ...msg, text: botText } // ...means copy all the previous message and update the text into bottext
         : msg
     )
   );
